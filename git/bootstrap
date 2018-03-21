@@ -1,0 +1,36 @@
+symlink "$topic/gitconfig"
+
+case "$OSTYPE" in
+
+  cygwin|windows)
+    dir=windows
+    ;;
+
+  *)
+    dir=
+    ;;
+esac
+
+[[ -n "$dir" ]] && platform_specific="$topic/platform-specific/$dir"
+
+# Find platform-specific and generic configs with generics sorted last.
+processed=()
+find "$platform_specific" "$topic/platform-specific/_" \
+     -name '*.config' \
+     -type f \
+     -print0 2> /dev/null | \
+  while read -r -d $'\0' config; do
+
+  name="$(basename "$config")"
+  target="$HOME/.git-config/${name%%.*}.config"
+
+  for p in "${processed[@]}"; do
+    if [[ "$p" == "$target" ]]; then
+      success "$(printf "Skipped %b%s%b (already has been linked)" $green "$config" $reset_color)"
+      continue 2
+    fi
+  done
+
+  symlink "$config" "$target"
+  processed+=("$target")
+done
