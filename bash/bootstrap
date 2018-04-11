@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+#shellcheck disable=2154
+
 [[ "$OSTYPE" == 'windows' ]] && return
 
 symlink "$topic/bashrc"

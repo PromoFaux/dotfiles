@@ -1,13 +1,21 @@
+#!/usr/bin/env bash
+#shellcheck disable=2154
+
 [[ ! "$OSTYPE" == 'linux' ]] && return
 
 symlink "$topic/gitconfig"
 
-if [[ -f /mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/gpg.exe ]]; then
-  if [[ ! -f /usr/local/bin/gpg ]]; then
+winGpgPath="/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
+linuxGpgPath_user="/usr/local/bin/gpg"
+linuxGpgPath="/usr/bin/gpg"
+linuxGpgPathOld="/usr/bin/gpgold"
+
+if [[ -f "$winGpgPath" ]]; then
+  if [[ ! -f "$linuxGpgPath_user" ]]; then
     printf "GPG is installed on windows, symlinking to enable yubikey usage"
-    sudo ln -s /mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/gpg.exe /usr/local/bin/gpg
-    if [[ -f /usr/bin/gpg ]]; then
-      sudo mv /usr/bin/gpg /usr/bin/gpgold
+    sudo ln -s "$winGpgPath" "$linuxGpgPath_user"
+    if [[ -f "$linuxGpgPath" ]]; then
+      sudo mv "$linuxGpgPath" "$linuxGpgPathOld"
     fi
   fi
 fi
