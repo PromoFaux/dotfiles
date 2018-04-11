@@ -1,7 +1,0 @@
-if [[ "$OSTYPE" == 'windows' ]]; then
-    cp $topic/gitconfig.win $topic/gitconfig
-    symlink "$topic/gitconfig"
-else
-    cp $topic/gitconfig.wsl $topic/gitconfig
-    symlink "$topic/gitconfig"
-fi
