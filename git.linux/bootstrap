@@ -1,3 +1,13 @@
-[[ "$OSTYPE" == 'windows' ]] && return
+[[ ! "$OSTYPE" == 'linux' ]] && return
 
 symlink "$topic/gitconfig"
+
+if [[ -f /mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/gpg.exe ]]; then
+  if [[ ! -f /usr/local/bin/gpg ]]; then
+    printf "GPG is installed on windows, symlinking to enable yubikey usage"
+    sudo ln -s /mnt/c/Program\ Files\ \(x86\)/GnuPG/bin/gpg.exe /usr/local/bin/gpg
+    if [[ -f /usr/bin/gpg ]]; then
+      sudo mv /usr/bin/gpg /usr/bin/gpgold
+    fi
+  fi
+fi
