@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #shellcheck disable=2154
 
-# This is a bit of a shim to enable using Yubikey usage with GPG.
+# This is a bit of a shim to enable using Yubikey usage with GPG in WSL
 # There are some fancy ways you can do it with npiperelay, but this seems to do the trick...
 # I'm not a cowboy, honest...
 [[ ! "$OSTYPE" == 'linux' ]] && return
