@@ -139,7 +139,7 @@ symlink() {
 
   if [[ "$skip" != "true" ]]; then # "false" or empty.
     mkdir -p "$(dirname "$dst")"
-    ln -s "$src" "$dst"
+    sudo ln -s "$src" "$dst"
 
     success "$(printf "Linked %b%s%b to %b%s%b" $green "$src" $reset_color $green "$dst" $reset_color)"
   fi

@@ -9,20 +9,13 @@
 winGpgPath="/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
 linuxGpgPath_user="/usr/local/bin/gpg"
 linuxGpgPath="/usr/bin/gpg"
-linuxGpgPathOld="/usr/bin/gpgold"
+linuxGpgPathOld="/usr/bin/gpg.orig"
 
 if [[ -f "$winGpgPath" ]]; then
-  info "$(printf "Found %b%s%b" $green "$winGpgPath" $reset_color)"
-  if [[ ! -f "$linuxGpgPath_user" ]]; then
-    info "$(printf "Symlinking %b%s%b to %b%s%b" $green "$winGpgPath" $reset_color $green "$linuxGpgPath_user" $reset_color )"
-    sudo ln -s "$winGpgPath" "$linuxGpgPath_user"
-    if [[ -f "$linuxGpgPath" ]]; then
-      info "$(printf "Moving %b%s%b to %b%s%b" $green "$linuxGpgPath" $reset_color $green "$linuxGpgPathOld" $reset_color )"
-      sudo mv "$linuxGpgPath" "$linuxGpgPathOld"
-    fi
-  else
-    info "$(printf "Symlink already set up")"
+  symlink "$winGpgPath" "$linuxGpgPath_user"
+  # If needed, move the linux GPG binary so that it doesn't interfere with the windows one
+  if [[ -f "$linuxGpgPath" ]]; then
+    sudo mv "$linuxGpgPath" "$linuxGpgPathOld"
+    success "$(printf "Moved %b%s%b to %b%s%b" $green "$linuxGpgPath" $reset_color $green "$linuxGpgPathOld" $reset_color )"
   fi
-else
- info "$(printf "Not Found %b%s%b" $green "$winGpgPath" $reset_color)"
 fi
