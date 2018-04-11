@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#shellcheck disable=2154
+
+# This is a bit of a shim to enable using Yubikey usage with GPG.
+# There are some fancy ways you can do it with npiperelay, but this seems to do the trick...
+# I'm not a cowboy, honest...
+[[ ! "$OSTYPE" == 'linux' ]] && return
+
+winGpgPath="/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
+linuxGpgPath_user="/usr/local/bin/gpg"
+linuxGpgPath="/usr/bin/gpg"
+linuxGpgPathOld="/usr/bin/gpgold"
+
+if [[ -f "$winGpgPath" ]]; then
+  info "$(printf "Found %b%s%b" $green "$winGpgPath" $reset_color)"
+  if [[ ! -f "$linuxGpgPath_user" ]]; then
+    info "$(printf "Symlinking %b%s%b to %b%s%b" $green "$winGpgPath" $reset_color $green "$linuxGpgPath_user" $reset_color )"
+    sudo ln -s "$winGpgPath" "$linuxGpgPath_user"
+    if [[ -f "$linuxGpgPath" ]]; then
+      info "$(printf "Moving %b%s%b to %b%s%b" $green "$linuxGpgPath" $reset_color $green "$linuxGpgPathOld" $reset_color )"
+      sudo mv "$linuxGpgPath" "$linuxGpgPathOld"
+    fi
+  else
+    info "$(printf "Symlink already set up")"
+  fi
+else
+ info "$(printf "Not Found %b%s%b" $green "$winGpgPath" $reset_color)"
+fi

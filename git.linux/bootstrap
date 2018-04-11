@@ -4,18 +4,3 @@
 [[ ! "$OSTYPE" == 'linux' ]] && return
 
 symlink "$topic/gitconfig"
-
-winGpgPath="/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
-linuxGpgPath_user="/usr/local/bin/gpg"
-linuxGpgPath="/usr/bin/gpg"
-linuxGpgPathOld="/usr/bin/gpgold"
-
-if [[ -f "$winGpgPath" ]]; then
-  if [[ ! -f "$linuxGpgPath_user" ]]; then
-    printf "GPG is installed on windows, symlinking to enable yubikey usage"
-    sudo ln -s "$winGpgPath" "$linuxGpgPath_user"
-    if [[ -f "$linuxGpgPath" ]]; then
-      sudo mv "$linuxGpgPath" "$linuxGpgPathOld"
-    fi
-  fi
-fi
