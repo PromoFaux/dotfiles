@@ -7,15 +7,8 @@
 [[ ! "$OSTYPE" == 'linux' ]] && return
 
 winGpgPath="/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
-linuxGpgPath_user="/usr/local/bin/gpg"
-linuxGpgPath="/usr/bin/gpg"
-linuxGpgPathOld="/usr/bin/gpg.orig"
+linuxGpgPath_user="/usr/local/bin/gpg-win"
 
 if [[ -f "$winGpgPath" ]]; then
   symlink "$winGpgPath" "$linuxGpgPath_user"
-  # If needed, move the linux GPG binary so that it doesn't interfere with the windows one
-  if [[ -f "$linuxGpgPath" ]]; then
-    sudo mv "$linuxGpgPath" "$linuxGpgPathOld"
-    success "$(printf "Moved %b%s%b to %b%s%b" $green "$linuxGpgPath" $reset_color $green "$linuxGpgPathOld" $reset_color )"
-  fi
 fi
