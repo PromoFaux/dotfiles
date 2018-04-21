@@ -1,4 +1,6 @@
 export TERM="xterm-256color"
+export DISPLAY=:0.0
+export LIBGL_ALWAYS_INDIRECT=1
 
 # Check for prezto install, if not, source it
 [ -d "${ZDOTDIR:-$HOME}/.zprezto" ] || git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
