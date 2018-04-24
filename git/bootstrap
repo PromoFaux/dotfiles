@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#shellcheck disable=2154
+
+if [[ "$OSTYPE" == 'linux' ]]; then
+  winGpgPath="/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
+  if [[ -f "$winGpgPath" ]]; then
+    symlink "$topic/gitconfig_wsl" "$HOME/.gitconfig"
+  else
+    symlink "$topic/gitconfig_lin" "$HOME/.gitconfig"
+  fi
+fi
+
+if [[ "$OSTYPE" == 'windows' ]]; then
+  symlink "$topic/gitconfig_win" "$HOME/.gitconfig"
+fi
+
+

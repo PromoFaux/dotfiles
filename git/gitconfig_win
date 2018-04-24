@@ -1,0 +1,8 @@
+[user]
+	name = Adam Warner
+	email = adamw@rner.email
+	signingkey = 2EDFE579
+[commit]
+	gpgsign = true
+[gpg]
+	program = C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe
