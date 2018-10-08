@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#shellcheck disable=2154
+
+# This is a bit of a shim to enable using Yubikey usage with GPG in WSL
+# There are some fancy ways you can do it with npiperelay, but this seems to do the trick...
+# I'm not a cowboy, honest...
+[[ ! "$OSTYPE" == 'linux' ]] && return
+
+
+if grep -q Microsoft /proc/version; then
+  weaselPath="/mnt/c/bin/weasel-pageant/"
+  weaselBin="weasel-pageant"
+
+  if [[ ! -f "/mnt/c/bin/weasel-pageant/weasel-pageant" ]]; then
+    cp -r $topic/weasel-pageant "/mnt/c/bin/"
+    success "$(printf "Copied %b%s%b to %b%s%b" $green "weasel-pageant" $reset_color $green "/mnt/c/bin/weasel-pageant" $reset_color)"
+  else
+    success "$(printf "Skipped %b%s%b == %b%s%b" $green "weasel-pageant" $reset_color $green "/mnt/c/bin/weasel-pageant" $reset_color)"
+  fi
+fi
