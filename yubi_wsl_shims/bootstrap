@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 #shellcheck disable=2154
 
-# This is a bit of a shim to enable using Yubikey usage with GPG in WSL
-# There are some fancy ways you can do it with npiperelay, but this seems to do the trick...
-# I'm not a cowboy, honest...
 [[ ! "$OSTYPE" == 'linux' ]] && return
 
-
 if grep -q Microsoft /proc/version; then
+
+  #Ensure weasel-pageant is installed to interact with gpg-agent
   weaselPath="/mnt/c/bin/weasel-pageant/"
   weaselBin="weasel-pageant"
 
@@ -16,5 +14,16 @@ if grep -q Microsoft /proc/version; then
     success "$(printf "Copied %b%s%b to %b%s%b" $green "weasel-pageant" $reset_color $green "/mnt/c/bin/weasel-pageant" $reset_color)"
   else
     success "$(printf "Skipped %b%s%b == %b%s%b" $green "weasel-pageant" $reset_color $green "/mnt/c/bin/weasel-pageant" $reset_color)"
+  fi
+
+  # This is a bit of a shim to enable using Yubikey usage with GPG in WSL
+  # There are some fancy ways you can do it with npiperelay, but this seems to do the trick...
+  # I'm not a cowboy, honest...
+  # TODO: Install GPG into windows if it isnt installed? Ill need to do some reading
+  winGpgPath="/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
+  linuxGpgPath_user="/usr/local/bin/gpg-win"
+
+  if [[ -f "$winGpgPath" ]]; then
+    symlink "$winGpgPath" "$linuxGpgPath_user"
   fi
 fi
