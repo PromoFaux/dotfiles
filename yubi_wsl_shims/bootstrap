@@ -6,14 +6,19 @@
 if grep -q Microsoft /proc/version; then
 
   #Ensure weasel-pageant is installed to interact with gpg-agent
-  weaselPath="/mnt/c/bin/weasel-pageant/"
-  weaselBin="weasel-pageant"
-
   if [[ ! -f "/mnt/c/bin/weasel-pageant/weasel-pageant" ]]; then
     cp -r $topic/weasel-pageant "/mnt/c/bin/"
     success "$(printf "Copied %b%s%b to %b%s%b" $green "weasel-pageant" $reset_color $green "/mnt/c/bin/weasel-pageant" $reset_color)"
   else
     success "$(printf "Skipped %b%s%b == %b%s%b" $green "weasel-pageant" $reset_color $green "/mnt/c/bin/weasel-pageant" $reset_color)"
+  fi
+
+  #similar, but for wsl-ssh-pageant so I can use native win32 SSH with yubi SSH
+  if [[ ! -f "/mnt/c/bin/wsl-ssh-pageant/wsl-ssh-pageant.exe" ]]; then
+    cp -r $topic/wsl-ssh-pageant "/mnt/c/bin/"
+    success "$(printf "Copied %b%s%b to %b%s%b" $green "wsl-ssh-pageant" $reset_color $green "/mnt/c/bin/wsl-ssh-pageant" $reset_color)"
+  else
+    success "$(printf "Skipped %b%s%b == %b%s%b" $green "wsl-ssh-pageant" $reset_color $green "/mnt/c/bin/wsl-ssh-pageant" $reset_color)"
   fi
 
   # This is a bit of a shim to enable using Yubikey usage with GPG in WSL
