@@ -31,4 +31,11 @@ if grep -q Microsoft /proc/version; then
   if [[ -f "$winGpgPath" ]]; then
     symlink "$winGpgPath" "$linuxGpgPath_user"
   fi
+
+  # Need to set some environment variables in windows too so I can use Yubi SSH Auth under windows
+  info "Setting SSH_AUTH_SOCK envirionment variable"
+  /mnt/c/Windows/System32/setx.exe SSH_AUTH_SOCK '\\.\pipe\ssh-pageant'
+  info "Setting GIT_SSH envirionment variable"
+  /mnt/c/Windows/System32/setx.exe GIT_SSH 'C:\Windows\System32\OpenSSH\ssh.exe'
+
 fi
