@@ -34,8 +34,8 @@ if grep -q Microsoft /proc/version; then
 
   # Need to set some environment variables in windows too so I can use Yubi SSH Auth under windows
   info "Setting SSH_AUTH_SOCK envirionment variable"
-  /mnt/c/Windows/System32/setx.exe SSH_AUTH_SOCK '\\.\pipe\ssh-pageant'
+  /mnt/c/Windows/System32/setx.exe SSH_AUTH_SOCK '\\.\pipe\ssh-pageant' > /dev/null
   info "Setting GIT_SSH envirionment variable"
-  /mnt/c/Windows/System32/setx.exe GIT_SSH 'C:\Windows\System32\OpenSSH\ssh.exe'
+  /mnt/c/Windows/System32/setx.exe GIT_SSH 'C:\Windows\System32\OpenSSH\ssh.exe' > /dev/null
 
 fi
