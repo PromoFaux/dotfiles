@@ -6,4 +6,6 @@ scoop install git
 
 scoop update
 
-scoop install gpg
+scoop install gpg coreutils nano
+
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
